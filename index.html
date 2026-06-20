@@ -715,6 +715,21 @@
     font-size: 0.68rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.06em;
   }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: #dcfce7; color: #15803d;
+    padding: 0.22rem 0.7rem; border-radius: 50px;
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  .pcard-links { display: flex; gap: 1rem; margin-top: 0.9rem; }
+  .pcard-link {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--accent); text-decoration: none;
+  }
+  .pcard-link:hover { color: var(--blue-700); text-decoration: underline; }
 
   .pcard h3 { font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 0.5rem; }
   .pcard p  { font-size: 0.85rem; color: var(--gray-400); line-height: 1.75; flex: 1; }
@@ -915,7 +930,7 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="Yashbhosaleresume.pdf" class="nav-cv" download="Yash_Bhosale_CV.pdf"><i class="fa fa-download"></i> CV</a></li>
+    <li><a href="Yashbhosaleresume 7.14.37 PM.pdf" class="nav-cv" download="Yash_Bhosale_CV.pdf"><i class="fa fa-download"></i> CV</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -1303,10 +1318,28 @@
 
     <div class="projects-intro fade-up">
       <i class="fa fa-info-circle"></i>
-      <span>Currently in active learning mode — projects are being built as skills grow. Check back soon, or follow my GitHub for updates!</span>
+      <span>Here's a project I've built, with more on the way as my skills grow. Check back soon, or follow my GitHub for updates!</span>
     </div>
 
     <div class="projects-grid">
+      <div class="pcard">
+        <div class="pcard-glow" style="background:radial-gradient(circle,#22c55e,transparent)"></div>
+        <div class="pcard-header">
+          <div class="pcard-icon" style="background:#dcfce7">🛒</div>
+          <div class="live-badge">✅ Live</div>
+        </div>
+        <h3>FreshMart Grocery Mall</h3>
+        <p>A multi-branch grocery e-commerce platform with live product sync via Firebase Firestore, a shopping cart with WhatsApp-based checkout, an admin dashboard for managing branches/products/orders, and a customer review system with dark/light theme support.</p>
+        <div class="pcard-footer">
+          <div class="pcard-tech">
+            <span class="tech-chip">JavaScript</span>
+            <span class="tech-chip">Firebase</span>
+            <span class="tech-chip">Firestore</span>
+            <span class="tech-chip">HTML/CSS</span>
+          </div>
+        </div>
+      </div>
+
       <div class="pcard">
         <div class="pcard-glow" style="background:radial-gradient(circle,#fbbf24,transparent)"></div>
         <div class="pcard-header">
@@ -1491,7 +1524,7 @@
 </footer>
 
 <!-- EmailJS SDK -->
-<script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
   // Nav scroll effect
@@ -1582,7 +1615,7 @@
 
   // Form submit handler
   // Initialize EmailJS with your public key
-  try { emailjs.init('xZcXKKj9_EgmrDEak'); } catch (e) { console.warn('EmailJS init failed', e); }
+  try { emailjs.init({ publicKey: 'xZcXKKj9_EgmrDEak' }); } catch (e) { console.warn('EmailJS init failed', e); }
 
   // Handle contact form submission using EmailJS
   (function(){
@@ -1594,6 +1627,12 @@
       const btn = contactForm.querySelector('.fsubmit');
       const feedback = document.getElementById('contact-feedback');
       const orig = btn.innerHTML;
+
+      if (typeof emailjs === 'undefined') {
+        if (feedback) { feedback.style.display = 'block'; feedback.style.color = '#7f1d1d'; feedback.textContent = 'Message service unavailable right now — please email me directly instead.'; }
+        return;
+      }
+
       btn.disabled = true;
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
       if (feedback) { feedback.style.display = 'none'; }
